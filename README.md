@@ -47,7 +47,7 @@ public class Authenticator: IAuthenticator
     {
         var authContext = new ADAuthenticationContext(Constants.ADALAuthority, false, out ADAuthenticationError error);
         var uri = new Uri(Constants.ADALRedirectUri);
-        var domain_hint = "domain_hint=yourcompany.com"; // "&scope=openid&p=B2C_1_xyz_sign_in"
+        var domain_hint = "domain_hint=yourcompany.com";
         var identity = this.Identity;
 
         await authContext.AcquireTokenWithResourceAsync(ResourceUri, Constants.ADALClientId, uri, identity, domain_hint);
