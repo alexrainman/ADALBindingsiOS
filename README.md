@@ -1,5 +1,7 @@
 ## Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and macOS (C# Bindings)
 
+ADAL .Net and Intune SDK token cache are incompatible. To be able to use Intune with ADAL in Xamarin.iOS, a binding of the native Obj-C library for ADAL is needed.
+
 ### Build the .a library:
 
 1.) Download ADAL for Objective-C version 2.6.5
