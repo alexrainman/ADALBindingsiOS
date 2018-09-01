@@ -1,6 +1,6 @@
 ## Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and macOS (C# Bindings)
 
-### To build the .a:
+### Build the .a library:
 
 1.) Download ADAL for Objective-C version 2.6.5
 
