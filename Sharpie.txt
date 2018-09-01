@@ -1,1 +1,1 @@
-sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /users/areyes27/Projects/ADALBindingsiOS/Headers /users/areyes27/Projects/ADALBindingsiOS/Headers/*.h
+sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /users/alexrainman/Projects/ADALBindingsiOS/Headers /users/alexrainman/Projects/ADALBindingsiOS/Headers/*.h
