@@ -1,0 +1,5 @@
+//
+//  adal__ios__staticlib.xcconfig
+//
+
+#include "adal__ios__common.xcconfig"

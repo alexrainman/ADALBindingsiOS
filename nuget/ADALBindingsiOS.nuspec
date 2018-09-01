@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>ADALBindingsiOS</id>
+        <version>2.6.5</version>
+        <title>Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and macOS (C# Bindings)</title>
+        <authors>Alex Rainman</authors>
+        <owners>Alex Rainman</owners>
+        <licenseUrl>https://github.com/alexrainman/ADALBindingsiOS/blob/master/README.md</licenseUrl>
+        <projectUrl>https://github.com/alexrainman/ADALBindingsiOS</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and macOS (C# Bindings)</description>
+        <summary>Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and macOS (C# Bindings)</summary>
+        <releaseNotes></releaseNotes>
+        <tags>adal xamarin binding obj-c c#</tags>
+        <dependencies>
+        </dependencies>
+    </metadata>
+    <files>
+        <!-- Xamarin.iOS (Unified)-->
+        <file src="lib/ADALBindingsiOS.dll" target="lib/Xamarin.iOS10/ADALBindingsiOS.dll" />
+    </files>
+</package>
