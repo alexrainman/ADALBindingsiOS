@@ -1,40 +1,15 @@
 ## Microsoft Azure Active Directory Authentication Library (ADAL) for iOS and macOS (C# Bindings)
 
-ADAL .Net and Intune SDK token cache are incompatible. To be able to use Intune with ADAL in Xamarin.iOS, a binding of the native Obj-C library for ADAL is needed.
+ADAL .Net and Intune SDK token cache are incompatible. To use ADAL as authentication mechanism of Intune in Xamarin.iOS, a binding of the native Obj-C library is needed.
 
-### Build the .a library:
+### Setup
 
-1.) Download ADAL for Objective-C version 2.6.5
-
-2.) Open ADAL.xcworkspace in Xcode
-
-3.) Change the build target to "ADALiOS"
-
-4.) Change the build configuration from Debug to Release
-
-5.) Build for any simulator
-
-6.) In the project explorer, expand ADAL -> Products
-
-7.) Right click libADALiOS.a and select "Show in Finder". The path of the Finder window that appears should end in "Release-iphonesimulator", and you should see a file called libADALiOS.a in that directory if everything was done correctly
-
-9.) Plug in a physical device and build for that device
-
-10.) Right click libADALiOS.a and select "Show in Finder". The path of the Finder window that appears should end in "Release-iphoneos", and you should see a file called libADALiOS.a in that directory if everything was done correctly
-
-11.) Open a terminal window and run the following: lipo -create <path to iphoneos libADALiOS.a> <path to iphonesimulator libADALiOS.a> -output <path to new combined libADALiOS.a>
+* Available on NuGet: https://www.nuget.org/packages/ADALBindingsiOS/ [![NuGet](https://img.shields.io/nuget/v/ADALBindingsiOS.svg?label=NuGet)](https://www.nuget.org/packages/ADALBindingsiOS/)
+* Install in your Xamarin.iOS project.
   
-12.) Use the combined library to create the bindings. All the public headers for iOS can be found in the "include" folder of either build directory
+### Usage
 
-13.) Use ObjectiveSharpie to generate API definitions and structures
-
-```bash
-sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /users/alexrainman/Projects/ADALBindingsiOS/Headers /users/alexrainman/Projects/ADALBindingsiOS/Headers/*.h
-```
-
-14. ) Follow this link for more details about using ObjectiveSharpie and normalizing the API definitons: https://docs.microsoft.com/en-us/xamarin/ios/platform/binding-objective-c/walkthrough?tabs=vsmac#using-objective-sharpie
-  
-### Shared Interface
+#### Shared Interface
 
 ```cs
 public interface IAuthenticator
@@ -48,7 +23,7 @@ public interface IAuthenticator
 }
 ```
 
-### Xamarin.iOS implementation
+#### Xamarin.iOS implementation
 
 ```cs
 public class Authenticator: IAuthenticator
@@ -147,3 +122,36 @@ public class Authenticator: IAuthenticator
     }
 }    
 ```
+
+### Building the .a library:
+
+1.) Download ADAL for Objective-C version 2.6.5
+
+2.) Open ADAL.xcworkspace in Xcode
+
+3.) Change the build target to "ADALiOS"
+
+4.) Change the build configuration from Debug to Release
+
+5.) Build for any simulator
+
+6.) In the project explorer, expand ADAL -> Products
+
+7.) Right click libADALiOS.a and select "Show in Finder". The path of the Finder window that appears should end in "Release-iphonesimulator", and you should see a file called libADALiOS.a in that directory if everything was done correctly
+
+9.) Plug in a physical device and build for that device
+
+10.) Right click libADALiOS.a and select "Show in Finder". The path of the Finder window that appears should end in "Release-iphoneos", and you should see a file called libADALiOS.a in that directory if everything was done correctly
+
+11.) Open a terminal window and run the following: lipo -create <path to iphoneos libADALiOS.a> <path to iphonesimulator libADALiOS.a> -output <path to new combined libADALiOS.a>
+  
+12.) Use the combined library to create the bindings. All the public headers for iOS can be found in the "include" folder of either build directory
+
+13.) Use ObjectiveSharpie to generate API definitions and structures
+
+```bash
+sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /users/alexrainman/Projects/ADALBindingsiOS/Headers /users/alexrainman/Projects/ADALBindingsiOS/Headers/*.h
+```
+
+14. ) Follow this link for more details about using ObjectiveSharpie and normalizing the API definitons: https://docs.microsoft.com/en-us/xamarin/ios/platform/binding-objective-c/walkthrough?tabs=vsmac#using-objective-sharpie
+
