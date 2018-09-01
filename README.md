@@ -24,7 +24,7 @@
   
 12.) Use the combined library to create the bindings. All the public headers for iOS can be found in the "include" folder of either build directory
   
-### Interface
+### Shared Interface
 
 ```cs
 public interface IAuthenticator
