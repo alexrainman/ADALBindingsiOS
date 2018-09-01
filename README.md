@@ -23,6 +23,14 @@
 11.) Open a terminal window and run the following: lipo -create <path to iphoneos libADALiOS.a> <path to iphonesimulator libADALiOS.a> -output <path to new combined libADALiOS.a>
   
 12.) Use the combined library to create the bindings. All the public headers for iOS can be found in the "include" folder of either build directory
+
+13.) Use ObjectiveSharpie to generate API definitions and structures
+
+```bash
+sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /users/alexrainman/Projects/ADALBindingsiOS/Headers /users/alexrainman/Projects/ADALBindingsiOS/Headers/*.h
+```
+
+14. ) Follow this link for more details about using ObjectiveSharpie and normalizing the API definitons: https://docs.microsoft.com/en-us/xamarin/ios/platform/binding-objective-c/walkthrough?tabs=vsmac#using-objective-sharpie
   
 ### Shared Interface
 
