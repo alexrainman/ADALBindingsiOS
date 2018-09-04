@@ -123,6 +123,25 @@ public class Authenticator: IAuthenticator
 }    
 ```
 
+#### AppDelegate.cs
+
+```cs
+SimpleIoc.Default.Register<IAuthenticator, Authenticator>();
+```
+
+#### Authenticate
+
+```cs
+var authenticator = SimpleIoc.Default.GetInstance<IAuthenticator>();
+await authenticator.Authenticate(Constants.ResourceUri);
+```
+
+#### Authorization Header
+
+```cs
+
+```
+
 ### Building the .a library:
 
 1.) Download ADAL for Objective-C version 2.6.5
