@@ -29,7 +29,7 @@ public class Authenticator: IAuthenticator
     {
         var authContext = new ADAuthenticationContext(Constants.ADALAuthority, false, out ADAuthenticationError error);
         var uri = new Uri(Constants.ADALRedirectUri);
-        var domain_hint = "domain_hint=slb.com"; // "&scope=openid&p=B2C_1_xyz_sign_in"
+        var domain_hint = "domain_hint=yourdomain.com"; // "&scope=openid&p=B2C_1_xyz_sign_in"
 
         var identity = CrossKeyChain.Current.GetKey("upn");
 
