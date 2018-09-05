@@ -15,11 +15,8 @@ ADAL .Net and Intune SDK token cache are incompatible. To use ADAL as authentica
 public interface IAuthenticator
 {
     Task Authenticate(string ResourceUri);
+    string AccessToken(string upn, string aadId, string resourceId);
     void SignOut();
-    string AccessToken { get; }
-    string Identity { get; }
-    string UniqueId { get; }
-    string FullName { get; }
 }
 ```
 
@@ -32,10 +29,40 @@ public class Authenticator: IAuthenticator
     {
         var authContext = new ADAuthenticationContext(Constants.ADALAuthority, false, out ADAuthenticationError error);
         var uri = new Uri(Constants.ADALRedirectUri);
-        var domain_hint = "domain_hint=yourcompany.com";
-        var identity = this.Identity;
+        var domain_hint = "domain_hint=slb.com"; // "&scope=openid&p=B2C_1_xyz_sign_in"
 
-        await authContext.AcquireTokenWithResourceAsync(ResourceUri, Constants.ADALClientId, uri, identity, domain_hint);
+        var identity = CrossKeyChain.Current.GetKey("upn");
+
+        var result = await authContext.AcquireTokenWithResourceAsync(ResourceUri, Constants.ADALClientId, uri, identity, domain_hint);
+
+        CrossKeyChain.Current.SetKey("upn", result.TokenCacheItem.UserInformation.Upn);
+        CrossKeyChain.Current.SetKey("aadId", result.TokenCacheItem.UserInformation.UniqueId);
+    }
+
+    public string AccessToken(string upn, string aadId, string resourceId)
+    {
+        try
+        {
+            var item = ADTokenCacheItem(upn, aadId, resourceId);
+            return item.AccessToken;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return "";
+        }
+    }
+
+    // IsEmptyUSer will return YES, if server doesn't return an id_token (not OIDC compliant).
+    private ADTokenCacheItem ADTokenCacheItem(string upn, string aadId, string resourceId)
+    {
+        return ADKeychainTokenCache.DefaultKeychainCache().AllItems(out ADAuthenticationError error)
+                                   .Last(arg => !string.IsNullOrEmpty(arg.AccessToken)
+                                         && arg.UserInformation.Upn == upn
+                                         && arg.UserInformation.UniqueId == aadId
+                                         && arg.Resource == resourceId
+                                         && !arg.IsExpired
+                                         && !arg.IsEmptyUser);
     }
 
     public void SignOut()
@@ -46,81 +73,7 @@ public class Authenticator: IAuthenticator
             ADKeychainTokenCache.DefaultKeychainCache().RemoveItem(item, out error);
         }
     }
-
-    public string AccessToken
-    {
-        get
-        {
-            try
-            {
-                var item = ADTokenCacheItem();
-                return item.AccessToken;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return "";
-            }
-        }
-    }
-
-    public string Identity
-    {
-        get
-        {
-            try
-            {
-                var item = ADTokenCacheItem();
-                return item.UserInformation.Upn.ToLower();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return "";
-            }
-        }
-    }
-
-    public string UniqueId
-    {
-        get
-        {
-            try
-            {
-                var item = ADTokenCacheItem();
-                return item.UserInformation.UniqueId;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return "";
-            }
-        }
-    }
-
-    public string FullName
-    {
-        get
-        {
-            try
-            {
-                var result = ADTokenCacheItem();
-                return result.UserInformation.GivenName + " " + result.UserInformation.FamilyName;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return "";
-            }
-        }
-    }
-
-    private ADTokenCacheItem ADTokenCacheItem()
-    {
-        return ADKeychainTokenCache.DefaultKeychainCache().AllItems(out ADAuthenticationError error)
-                                   .Last(arg => !string.IsNullOrEmpty(arg.AccessToken) && !arg.IsExpired && !arg.IsEmptyUser);
-    }
-}    
+}   
 ```
 
 #### AppDelegate.cs
@@ -139,7 +92,11 @@ await authenticator.Authenticate(Constants.ResourceUri);
 #### Authorization Header
 
 ```cs
+var upn = CrossKeyChain.Current.GetKey("upn");
+var aadId = CrossKeyChain.Current.GetKey("aadId");
+var accessToken = authenticator.AccessToken(upn, aadId, Constants.ResourceUri);
 
+client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 ```
 
 ### Building the .a library:
