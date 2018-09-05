@@ -119,14 +119,18 @@ client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bear
 
 10.) Right click libADALiOS.a and select "Show in Finder". The path of the Finder window that appears should end in "Release-iphoneos", and you should see a file called libADALiOS.a in that directory if everything was done correctly
 
-11.) Open a terminal window and run the following: lipo -create <path to iphoneos libADALiOS.a> <path to iphonesimulator libADALiOS.a> -output <path to new combined libADALiOS.a>
+11.) Open a terminal window and run the following:
+
+```bash
+lipo -create <path to iphoneos libADALiOS.a> <path to iphonesimulator libADALiOS.a> -output <path to new combined libADALiOS.a>
+```
   
 12.) Use the combined library to create the bindings. All the public headers for iOS can be found in the "include" folder of either build directory
 
 13.) Use ObjectiveSharpie to generate API definitions and structures
 
 ```bash
-sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /users/alexrainman/Projects/ADALBindingsiOS/Headers /users/alexrainman/Projects/ADALBindingsiOS/Headers/*.h
+sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /ADALBindingsiOS/Headers /ADALBindingsiOS/Headers/*.h
 ```
 
 14. ) Follow this link for more details about using ObjectiveSharpie and normalizing the API definitons: https://docs.microsoft.com/en-us/xamarin/ios/platform/binding-objective-c/walkthrough?tabs=vsmac#using-objective-sharpie
