@@ -135,3 +135,46 @@ sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /ADALBindi
 
 14. ) Follow this link for more details about using ObjectiveSharpie and normalizing the API definitons: https://docs.microsoft.com/en-us/xamarin/ios/platform/binding-objective-c/walkthrough?tabs=vsmac#using-objective-sharpie
 
+### How to download CocoaPods?
+
+1.First open your terminal
+
+2.Then update your gem file with command
+
+```
+sudo gem install -n /usr/local/bin cocoapods
+```
+
+3.Then give your project path
+
+```
+cd /your project path 
+```
+
+4.Touch the podfile
+
+```
+touch podfile
+```
+
+5.Open your podfile
+
+```
+open -e podfile
+```
+
+6.It will open a podfile like a text edit. Then set your target. For example if you want to set up Google maps then your podfile should be like
+
+```
+use_frameworks!
+target 'yourProjectName' do
+    pod 'GoogleMaps'
+end
+```
+
+7.Then install the pod
+
+```
+pod install
+```
+
