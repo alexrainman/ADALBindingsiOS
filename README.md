@@ -137,33 +137,33 @@ sharpie bind --output=ADAL --namespace=ADAL --sdk=iphoneos11.4 -scope /ADALBindi
 
 ### How to download CocoaPods?
 
-1.First open your terminal
+1. First open your terminal
 
-2.Then update your gem file with command
+2. Then update your gem file with command
 
 ```
 sudo gem install -n /usr/local/bin cocoapods
 ```
 
-3.Then give your project path
+3. Then give your project path
 
 ```
 cd /your project path 
 ```
 
-4.Touch the podfile
+4. Touch the podfile
 
 ```
 touch podfile
 ```
 
-5.Open your podfile
+5. Open your podfile
 
 ```
 open -e podfile
 ```
 
-6.It will open a podfile like a text edit. Then set your target. For example if you want to set up Google maps then your podfile should be like
+6. It will open a podfile like a text edit. Then set your target. For example if you want to set up Google maps then your podfile should be like
 
 ```
 use_frameworks!
@@ -172,9 +172,11 @@ target 'yourProjectName' do
 end
 ```
 
-7.Then install the pod
+7. Then install the pod
 
 ```
 pod install
 ```
+
+CocoaPods should be located at Pods folder.
 
